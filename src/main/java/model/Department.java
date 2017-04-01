@@ -2,15 +2,15 @@ package model;
 
 
 public class Department {
-    private int departmentID;
+    private Integer departmentID;
+
     private String departmentName;
 
-
-    public int getDepartmentID() {
+    public Integer getDepartmentID() {
         return departmentID;
     }
 
-    public void setDepartmentID(int departmentID) {
+    public void setDepartmentID(Integer departmentID) {
         this.departmentID = departmentID;
     }
 

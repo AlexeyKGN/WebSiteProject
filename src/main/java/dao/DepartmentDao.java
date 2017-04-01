@@ -8,14 +8,18 @@ import java.util.List;
 
 public interface DepartmentDao {
 
-        void deleteDepartment(Department departmentDelete);
+       // int deleteDepartment(Department id) throws SQLException;
+
+        Department deleteDepartment(int deleteId) throws SQLException;
 
         void updateDepartment(Department departmentUpdate);
 
-        void addDepartment(Department departmentAdd) throws SQLException;
 
-        Department getDepartmentById(int id);
+        Department getDepartmentById(int id) throws SQLException;
 
         List<Department> getListDepartments() throws SQLException;
+
+        int addDepartment(Department id) throws SQLException;
+
 
 }

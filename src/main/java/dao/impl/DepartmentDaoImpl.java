@@ -26,31 +26,51 @@ public class DepartmentDaoImpl  implements DepartmentDao{
     private static final String DEPARTMENT_GET_ALL = "SELECT * FROM departments;";
 
 
-//    public void deleteDepartment(int id) {
-//
-//    }
 
-    public void deleteDepartment(Department departmentDelete) {
 
+
+    public int addDepartment(Department departmentAdd) throws SQLException {
+        int status = 0;
+            Connection connection = DbConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(DEPARTMENT_INSERT);
+                    preparedStatement.setInt(1,departmentAdd.getDepartmentID());
+                    preparedStatement.setString(2,departmentAdd.getDepartmentName());
+                status = preparedStatement.executeUpdate();
+            connection.close();
+        return status;
+    }
+
+
+    public Department deleteDepartment(int deleteId) throws SQLException {
+        Connection connection = DbConnection.getConnection();
+        Department department = new Department();
+            PreparedStatement preparedStatement = connection.prepareStatement(DEPARTMENT_DELETE);
+                preparedStatement.setInt(1,deleteId);
+             preparedStatement.executeUpdate();
+        connection.close();
+        return department;
     }
 
     public void updateDepartment(Department departmentUpdate) {
 
     }
 
-    public Department getDepartmentById(int id) {
-        return null;
+    public Department getDepartmentById(int id) throws SQLException {
+             Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DEPARTMENT_GET_BY_ID);
+             preparedStatement.setInt(1,id);
+             Department department = new Department();
+             ResultSet resultSet = preparedStatement.executeQuery();
+             while (resultSet.next()){
+                 department.setDepartmentID(resultSet.getInt("departmentId"));
+                 department.setDepartmentName(resultSet.getString("departmentName"));
+             }
+             resultSet.close();
+             preparedStatement.close();
+        return department;
     }
 
 
-    public void addDepartment(Department departmentAdd) throws SQLException {
-        Connection connection = DbConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(DEPARTMENT_INSERT);
-        preparedStatement.setInt(1,departmentAdd.getDepartmentID());
-        preparedStatement.setString(2,departmentAdd.getDepartmentName());
-        preparedStatement.executeUpdate();
-        connection.close();
-    }
 
     public List<Department> getListDepartments() throws SQLException {
         Connection connection = DbConnection.getConnection();
@@ -66,4 +86,6 @@ public class DepartmentDaoImpl  implements DepartmentDao{
         }
         return departmentList;
     }
+
+
 }
